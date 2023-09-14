@@ -4,6 +4,8 @@ import pickle
 from collections import Counter
 from PIL import Image, ImageDraw
 
+import numpy as np # MY ATTEMPTED FIX
+
 DEFAULT_ENCODINGS_PATH = Path("output/encodings.pkl")
 BOUNDING_BOX_COLOR = "blue" # NEW ENTRY
 TEXT_COLOR = "white" # NEW ENTRY
@@ -71,7 +73,9 @@ def recognize_faces(
         input_image, input_face_locations
     )
 
-    pillow_image = Image.fromarray(input_image) # NEW LINE
+    open_image = Image.open(image_location) # MY ATTEMPTED FIX
+    image_array = np.asarray(open_image) # MY ATTEMPTED FIX
+    pillow_image = Image.fromarray(image_array) # NEW LINE IN VERSION 2 AND AMENDED BY ME IN VERSION 3
     draw = ImageDraw.Draw(pillow_image) # NEW LINE
     
     for bounding_box, unknown_encoding in zip(
